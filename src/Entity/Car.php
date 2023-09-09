@@ -3,12 +3,24 @@ namespace App\Entity;
 
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Post;
+use App\Controller\GetHighRatedReviews;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
-#[ApiResource]
+
+#[ApiResource(
+    routePrefix: '/v1',
+    operations: [
+    new Post(
+        name: 'highrate',
+        uriTemplate: '/high-rate',
+        controller: GetHighRatedReviews::class
+    )
+])]
+
 class Car
 {
     #[ORM\Id, ORM\Column, ORM\GeneratedValue]

@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
+#[ApiResource(routePrefix: '/v1')]
 class Review
 {
     #[ORM\Id, ORM\Column, ORM\GeneratedValue]
