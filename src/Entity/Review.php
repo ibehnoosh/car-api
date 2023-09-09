@@ -22,8 +22,10 @@ class Review
     private int $starRating = 1;
 
 
-    #[ORM\ManyToOne(targetEntity: Car::class, inversedBy: 'reviews')]
+    #[ORM\ManyToOne(targetEntity: Car::class, inversedBy: 'reviews'),
+     ORM\JoinColumn(nullable: false)]
     public $car;
+
 
     public function getId(): ?int
     {

@@ -80,15 +80,18 @@ class Car
         return $this;
     }
 
-    public function addOffer(Review $review): void
+    public function addReview(Review $review): void
     {
-        $review->car = $this;
+        if ($this->reviews->contains($review)) {
+            return;
+        }
+
+        $review->setCar($this);
         $this->reviews->add($review);
     }
 
-    public function removeOffer(Review $review): void
+    public function removeReview(Review $review): void
     {
-        $review->car = null;
         $this->reviews->removeElement($review);
     }
 }
