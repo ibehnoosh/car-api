@@ -2,25 +2,17 @@
 namespace App\Entity;
 
 
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\Post;
-use App\Controller\GetHighRatedReviews;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
-
 #[ApiResource(
-    routePrefix: '/v1',
-    operations: [
-    new Post(
-        name: 'highrate',
-        uriTemplate: '/high-rate',
-        controller: GetHighRatedReviews::class
-    )
-])]
-
+    routePrefix: '/v1')]
+#[ApiFilter(OrderFilter::class)]
 class Car
 {
     #[ORM\Id, ORM\Column, ORM\GeneratedValue]

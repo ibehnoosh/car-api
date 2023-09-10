@@ -2,13 +2,18 @@
 namespace App\Entity;
 
 
+use ApiPlatform\Doctrine\Orm\Filter\RangeFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
-#[ApiResource(routePrefix: '/v1')]
+#[ApiResource(
+    routePrefix: '/v1')]
+#[ApiFilter(RangeFilter::class, properties: ['starRating' =>'gte'])]
+#[ApiFilter(SearchFilter::class, properties: ['car'])]
 class Review
 {
     #[ORM\Id, ORM\Column, ORM\GeneratedValue]
