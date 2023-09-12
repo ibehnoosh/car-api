@@ -6,12 +6,20 @@ use ApiPlatform\Doctrine\Orm\Filter\RangeFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
+use App\Repository\ReviewRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
 #[ApiResource(
-    routePrefix: '/v1')]
+    routePrefix: '/v1',
+    operations:[
+        new Get(),
+        new Post(),
+    ]
+)]
 #[ApiFilter(RangeFilter::class, properties: ['starRating' =>'gte'])]
 #[ApiFilter(SearchFilter::class, properties: ['car'])]
 class Review
@@ -33,6 +41,12 @@ class Review
     public $car;
 
 
+    private $repository;
+
+    public function __construct(ReviewRepository  $repository)
+    {
+        $this->repository = $repository;
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -73,5 +87,10 @@ class Review
 
         return $this;
     }
+    public function findHighestRatedForCar(Car $car): ?Review
+    {
+        return $this->repository->findHighestRatedForCar($car);
+    }
+
 }
 

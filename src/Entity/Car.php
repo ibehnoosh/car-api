@@ -5,13 +5,26 @@ namespace App\Entity;
 use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
+use App\Controller\GetHighRatedReviews;
+use App\Repository\ReviewRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
+
 #[ApiResource(
-    routePrefix: '/v1')]
+    operations: [
+    new Get(
+        name: 'highreview',
+        uriTemplate: '/cars/{id}/rrh',
+        controller: GetHighRatedReviews::class
+    )
+],
+    routePrefix: '/v1',
+)]
 #[ApiFilter(OrderFilter::class)]
 class Car
 {
@@ -98,5 +111,6 @@ class Car
     {
         $this->reviews->removeElement($review);
     }
+
 }
 
